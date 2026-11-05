@@ -10,7 +10,1245 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+/* ==========================================================
+   CSS Stylesheet for Employee Warning Notice System
+   Southeast Transport Co.,Ltd. Perfect 1-Page A4 Fit for Logo-02
+   ========================================================== */
+
+:root {
+    --primary-color: #1e3a8a;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #475569;
+    --success-color: #059669;
+    --danger-color: #dc2626;
+    --info-color: #0284c7;
+    --bg-light: #f1f5f9;
+    --card-bg: #ffffff;
+    --border-color: #cbd5e1;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --font-prompt: 'Prompt', sans-serif;
+    --font-sarabun: 'Sarabun', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sarabun);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* Header Navbar */
+.app-header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    padding: 0.85rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1650px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: #60a5fa;
+}
+
+.brand h1 {
+    font-family: var(--font-prompt);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Buttons */
+.btn {
+    font-family: var(--font-prompt);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #047857;
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0369a1;
+}
+
+.btn-secondary {
+    background-color: #475569;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #334155;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #94a3b8;
+    color: #cbd5e1;
+}
+
+.btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.78rem;
+    border-radius: 4px;
+}
+
+.btn-danger-sm {
+    background: #ef4444;
+    color: #fff;
+    border: none;
+}
+
+.btn-danger-sm:hover {
+    background: #dc2626;
+}
+
+/* Main Layout Grid */
+.main-layout {
+    max-width: 1650px;
+    margin: 1.2rem auto;
+    padding: 0 1.2rem;
+    display: grid;
+    grid-template-columns: 44% 56%;
+    gap: 1.2rem;
+    align-items: start;
+}
+
+@media (max-width: 1200px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form Styles (Left Column) */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #f8fafc;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-prompt);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.form-row {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.form-row.col-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-row.col-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+    .form-row.col-2, .form-row.col-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.required {
+    color: var(--danger-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group textarea,
+.form-select {
+    font-family: var(--font-sarabun);
+    font-size: 0.9rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #ffffff;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.input-readonly {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+    font-weight: 600;
+}
+
+.badge-locked {
+    font-size: 0.7rem;
+    background: #e2e8f0;
+    color: #475569;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-weight: normal;
+}
+
+.fixed-approver-box {
+    background: #f8fafc;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.section-subtitle {
+    display: block;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #1e293b;
+    margin: 0.8rem 0 0.4rem 0;
+}
+
+/* Form Alert Banner for Employee Accumulation */
+.form-emp-alert {
+    background: #fffbeb;
+    border: 1.5px solid #f59e0b;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    color: #b45309;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+}
+
+.form-emp-alert.danger {
+    background: #fef2f2;
+    border-color: #ef4444;
+    color: #b91c1c;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+}
+
+/* Offense Checkbox Grid */
+.offense-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+@media (max-width: 768px) {
+    .offense-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.checkbox-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.6rem;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.checkbox-box:hover {
+    border-color: #93c5fd;
+    background-color: #f0f9ff;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.checkbox-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    margin-left: 1.4rem;
+}
+
+/* Penalty Radio Cards */
+.penalty-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.radio-card {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.radio-card:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.radio-card input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.6rem;
+    cursor: pointer;
+}
+
+.radio-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.radio-card.warning-danger {
+    border-color: #fca5a5;
+    background-color: #fff5f5;
+}
+
+.radio-card.warning-danger .radio-title {
+    color: var(--danger-color);
+}
+
+.mt-2 { margin-top: 0.4rem; }
+.mt-3 { margin-top: 0.8rem; }
+.font-weight-bold { font-weight: 600; }
+
+/* Preview Container & A4 Paper Styling */
+.preview-container {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 75px;
+}
+
+.page-a4 {
+    width: 210mm;
+    min-height: 297mm;
+    background: #ffffff;
+    padding: 8mm 14mm 8mm 14mm;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    color: #000000;
+    font-family: var(--font-sarabun);
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Natural Vertical Flow without Giant Gaps */
+.paper-inner-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 275mm;
+}
+
+/* Top Right Doc Ref No Row */
+.doc-top-ref-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Company Header Banner - Expanded Flush Full Width of Paper Margin */
+.company-header-banner-box {
+    text-align: center;
+    margin-bottom: 0.2rem;
+    width: 100%;
+}
+
+.full-company-logo-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Document Title Header */
+.doc-title-box {
+    text-align: center;
+    margin-bottom: 0.4rem;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.2rem;
+}
+
+.doc-title-th {
+    font-family: var(--font-prompt);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.5px;
+    margin-bottom: 0px;
+    line-height: 1.15;
+}
+
+.doc-title-en {
+    font-family: 'Prompt', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #222;
+    letter-spacing: 0.5px;
+}
+
+/* Header Grid on Paper */
+.doc-header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 1.2rem;
+    font-size: 0.88rem;
+    margin-bottom: 0.45rem;
+    background: #fafafa;
+    border: 1px solid #b3b3b3;
+    padding: 0.45rem 0.85rem;
+    border-radius: 4px;
+}
+
+.doc-info-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+}
+
+.info-label {
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 0.88rem;
+}
+
+.info-value {
+    flex-grow: 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.dotted {
+    border-bottom: 1px dotted #333;
+    min-height: 1.25rem;
+    display: inline-block;
+    padding-left: 2px;
+}
+
+.dotted-inline {
+    border-bottom: 1px dotted #333;
+    display: inline-block;
+    padding-left: 4px;
+    padding-right: 4px;
+    word-break: break-word;
+}
+
+/* Sections on Paper */
+.doc-section {
+    margin-bottom: 0.45rem;
+}
+
+.section-heading {
+    font-family: var(--font-prompt);
+    font-size: 0.94rem;
+    font-weight: 700;
+    margin-bottom: 0.22rem;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 0.12rem;
+    color: #000;
+}
+
+.doc-paragraph {
+    font-size: 0.88rem;
+    line-height: 1.52;
+    margin-bottom: 0.35rem;
+    text-align: left;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.formal-opening-paragraph {
+    text-align: justify;
+    line-height: 1.58;
+    margin-bottom: 0.4rem;
+}
+
+.doc-paragraph-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    margin-top: 0.3rem;
+}
+
+.pv-text {
+    font-weight: 600;
+    color: #000;
+}
+
+.label-inline {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.field-block {
+    margin-top: 0.35rem;
+}
+
+.label-block {
+    font-weight: 700;
+    font-size: 0.86rem;
+    margin-bottom: 0.15rem;
+    color: #000;
+}
+
+/* Details & Statement Boxes - Optimized Height for Logo-02 */
+.details-box {
+    margin-top: 0.12rem;
+    padding: 0.35rem 0.6rem;
+    min-height: 46px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-break: break-word;
+    white-space: pre-wrap;
+    border: 1px solid #999;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
+.statement-box {
+    min-height: 34px;
+    background: #ffffff;
+    border: 1px dotted #888;
+}
+
+/* Offense Table on Paper */
+.offense-table {
+    border: 1.5px solid #222;
+    border-radius: 4px;
+    margin: 0.3rem 0;
+    background: #ffffff;
+}
+
+.offense-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid #aaa;
+}
+
+.offense-row:last-child {
+    border-bottom: none;
+}
+
+.offense-col {
+    padding: 0.32rem 0.6rem;
+    border-right: 1px solid #aaa;
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.offense-col:last-child {
+    border-right: none;
+}
+
+.offense-col.checked {
+    background-color: #f0fdf4;
+}
+
+.offense-header {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #000;
+}
+
+.checkbox-mark {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.offense-col.checked .checkbox-mark {
+    color: #059669;
+}
+
+.offense-desc {
+    font-size: 0.74rem;
+    color: #333;
+    margin-left: 1.2rem;
+    margin-top: 0.08rem;
+    line-height: 1.3;
+}
+
+/* Penalty Preview */
+.penalty-preview-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0.3rem 0 0.4rem 0.6rem;
+    font-size: 0.86rem;
+    line-height: 1.4;
+}
+
+.penalty-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.penalty-item.checked {
+    font-weight: 700;
+    color: #000;
+}
+
+/* Legal Clause Box */
+.legal-clause-box {
+    border: 1.5px solid #333;
+    background-color: #fcfcfc;
+    padding: 0.45rem 0.75rem;
+    border-radius: 4px;
+    margin-top: 0.35rem;
+}
+
+.clause-title {
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.12rem;
+    color: #000;
+}
+
+.clause-body {
+    font-size: 0.74rem;
+    line-height: 1.46;
+    text-align: justify;
+    color: #111;
+}
+
+/* Signatures Grid (Optimized Vertical Spacing) */
+.signatures-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.65rem;
+    margin-top: 0.55rem;
+    margin-bottom: 0.2rem;
+}
+
+.sig-card {
+    border: 1px solid #bbb;
+    background: #fafafa;
+    padding: 0.4rem 0.35rem 0.35rem 0.35rem;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sig-header-tag {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.15rem;
+    margin-bottom: 0.15rem;
+}
+
+.sig-space {
+    height: 24px;
+}
+
+.sig-line-text {
+    font-weight: 600;
+    font-size: 0.82rem;
+}
+
+.sig-info-line {
+    font-size: 0.76rem;
+    color: #222;
+    margin-top: 0.1rem;
+}
+
+/* Clean Compact Witness Footer Box (Zero Bottom Overflow) */
+.witness-footer-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    border-top: 1px dotted #888;
+    padding-top: 0.3rem;
+    margin-top: 0.45rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.witness-title-tag {
+    font-weight: 700;
+    white-space: nowrap;
+    margin-right: 0.3rem;
+    font-size: 0.76rem;
+}
+
+.witness-fields-flex {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    flex-grow: 1;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    white-space: nowrap;
+}
+
+.witness-sig-line, 
+.witness-name-item, 
+.witness-pos-item, 
+.witness-date-item {
+    white-space: nowrap;
+}
+
+/* Registry Modal Drawer */
+.registry-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.registry-modal-overlay.active {
+    display: flex;
+}
+
+.registry-modal-card {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 1150px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.registry-modal-header {
+    background: #1e293b;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registry-modal-header h3 {
+    font-family: var(--font-prompt);
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal-btn:hover {
+    color: #fff;
+}
+
+.registry-modal-body {
+    padding: 1.2rem;
+    overflow-y: auto;
+}
+
+.registry-search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+.search-input-wrapper .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 0.6rem 0.8rem 0.6rem 2.6rem;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: var(--font-sarabun);
+    font-size: 0.92rem;
+}
+
+.search-summary-tag {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+}
+
+/* Registry Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.registry-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.registry-table th {
+    background: #f8fafc;
+    color: #1e293b;
+    font-family: var(--font-prompt);
+    font-weight: 600;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: left;
+}
+
+.registry-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.registry-table tr:hover {
+    background: #f8fafc;
+}
+
+/* Badges for Accumulated Warning Counts */
+.badge-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge-count-1 {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-count-2 {
+    background: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.badge-count-3 {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #1e293b;
+    color: #fff;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-family: var(--font-prompt);
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================
+   @media print - Balanced Full A4 Single Page for Logo-02
+   ========================================================== */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 6mm 10mm 6mm 10mm;
+    }
+
+    html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 12.5px !important;
+        line-height: 1.45 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: hidden !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .main-layout {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+    }
+
+    .preview-container {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .page-a4 {
+        width: 100% !important;
+        height: 280mm !important;
+        min-height: 280mm !important;
+        max-height: 280mm !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border: none !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+    }
+
+    .paper-inner-flex {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        height: 100% !important;
+        flex-grow: 1 !important;
+    }
+
+    .doc-top-ref-container {
+        display: flex !important;
+        justify-content: flex-end !important;
+        margin-bottom: 0.1rem !important;
+        font-size: 0.82rem !important;
+    }
+
+    .company-header-banner-box {
+        text-align: center !important;
+        margin-bottom: 0.2rem !important;
+        width: 100% !important;
+    }
+
+    .full-company-logo-img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .doc-title-box {
+        margin-bottom: 0.35rem !important;
+        padding-bottom: 0.18rem !important;
+    }
+
+    .doc-title-th {
+        font-size: 1.45rem !important;
+    }
+
+    .doc-title-en {
+        font-size: 0.82rem !important;
+    }
+
+    .doc-header-grid {
+        gap: 0.35rem 1.1rem !important;
+        margin-bottom: 0.4rem !important;
+        font-size: 0.86rem !important;
+        padding: 0.4rem 0.8rem !important;
+        border-color: #000 !important;
+        background: #ffffff !important;
+    }
+
+    .doc-section {
+        margin-bottom: 0.4rem !important;
+    }
+
+    .section-heading {
+        font-size: 0.92rem !important;
+        margin-bottom: 0.2rem !important;
+        border-bottom-color: #000 !important;
+    }
+
+    .doc-paragraph {
+        font-size: 0.84rem !important;
+        line-height: 1.48 !important;
+        margin-bottom: 0.32rem !important;
+    }
+
+    .formal-opening-paragraph {
+        line-height: 1.52 !important;
+        margin-bottom: 0.35rem !important;
+    }
+
+    .offense-table {
+        margin: 0.3rem 0 !important;
+        border-color: #000 !important;
+    }
+
+    .offense-row {
+        border-bottom-color: #555 !important;
+    }
+
+    .offense-col {
+        padding: 0.3rem 0.5rem !important;
+        font-size: 0.8rem !important;
+        line-height: 1.35 !important;
+        border-right-color: #555 !important;
+    }
+
+    .offense-desc {
+        font-size: 0.72rem !important;
+        line-height: 1.28 !important;
+    }
+
+    .details-box {
+        min-height: 42px !important;
+        font-size: 0.82rem !important;
+        line-height: 1.45 !important;
+        padding: 0.35rem 0.5rem !important;
+        border-color: #000 !important;
+        background: #ffffff !important;
+    }
+
+    .statement-box {
+        min-height: 32px !important;
+    }
+
+    .penalty-preview-row {
+        margin: 0.25rem 0 0.35rem 0.6rem !important;
+        gap: 0.2rem !important;
+        font-size: 0.84rem !important;
+    }
+
+    .legal-clause-box {
+        padding: 0.4rem 0.65rem !important;
+        margin-top: 0.3rem !important;
+        border-color: #000 !important;
+        background: #ffffff !important;
+    }
+
+    .clause-title {
+        font-size: 0.78rem !important;
+    }
+
+    .clause-body {
+        font-size: 0.74rem !important;
+        line-height: 1.44 !important;
+    }
+
+    .sig-card {
+        border-color: #000 !important;
+        background: #ffffff !important;
+    }
+
+    .sig-space {
+        height: 24px !important;
+    }
+
+    .signatures-grid {
+        margin-top: 0.5rem !important;
+        padding-top: 0.15rem !important;
+        gap: 0.5rem !important;
+        font-size: 0.78rem !important;
+        page-break-inside: avoid !important;
+    }
+
+    .witness-footer-box {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        font-size: 0.74rem !important;
+        margin-top: 0.35rem !important;
+        padding-top: 0.25rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+
+    .witness-fields-flex {
+        display: flex !important;
+        align-items: baseline !important;
+        gap: 0.3rem !important;
+        flex-grow: 1 !important;
+        justify-content: space-between !important;
+        font-size: 0.72rem !important;
+        white-space: nowrap !important;
+    }
+}
+
+</style>
 </head>
 <body>
     <!-- App Header Navbar -->
@@ -556,74 +1794,779 @@
     <!-- Notification Toast -->
     <div id="toast" class="toast"></div>
 
-    <script src="app.js"></script>
     <script>
 /**
- * sheets-sync.js - ส่งข้อมูลใบเตือนไป Google Sheet ทุกครั้งที่กด "บันทึกทะเบียน"
- * ไม่ต้องแก้ app.js
+ * Employee Warning Notice System & Registry History Management
+ * Southeast Transport Co.,Ltd.
  */
-const SYNC_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbzna7z3ERBNSNzxzrCMxRH9AsNCDEDWl5fLa4E7TW0nw1p3uBx_0RlzW-ijy9sYNunJkw/exec'
-};
 
-(function () {
-  const $ = id => document.getElementById(id);
-  const val = id => ($(id) ? $(id).value.trim() : '');
+document.addEventListener('DOMContentLoaded', () => {
+    // Select form elements
+    const form = document.getElementById('warningForm');
+    
+    const docRefNoInput = document.getElementById('docRefNo');
+    const issueDateInput = document.getElementById('issueDate');
+    const departmentInput = document.getElementById('department');
+    const empNameInput = document.getElementById('empName');
+    const empIdInput = document.getElementById('empId');
+    const positionInput = document.getElementById('position');
+    const vehicleRegInput = document.getElementById('vehicleReg');
+    
+    const incidentDateInput = document.getElementById('incidentDate');
+    const incidentTimeInput = document.getElementById('incidentTime');
+    const incidentLocationInput = document.getElementById('incidentLocation');
+    
+    const otherOffenseInput = document.getElementById('otherOffense');
+    const damageValueInput = document.getElementById('damageValue');
+    const offenseDetailsInput = document.getElementById('offenseDetails');
+    const employeeStatementInput = document.getElementById('employeeStatement');
+    
+    // Issuer Select & Custom Inputs
+    const issuerNameSelect = document.getElementById('issuerNameSelect');
+    const issuerNameCustom = document.getElementById('issuerNameCustom');
+    const issuerPositionSelect = document.getElementById('issuerPositionSelect');
+    const issuerPositionCustom = document.getElementById('issuerPositionCustom');
+    
+    // Fixed Approver Inputs
+    const approverNameInput = document.getElementById('approverName');
+    const approverPositionInput = document.getElementById('approverPosition');
 
-  function collectRecord() {
-    const issuerName = val('issuerNameSelect') === 'other' ? val('issuerNameCustom') : val('issuerNameSelect');
-    const issuerPosition = val('issuerPositionSelect') === 'other' ? val('issuerPositionCustom') : val('issuerPositionSelect');
-    const levelMap = { level1: 'ครั้งที่ 1', level2: 'ครั้งที่ 2', final: 'ครั้งสุดท้าย' };
-    const lv = document.querySelector('input[name="penaltyLevel"]:checked');
-    const offenses = [...document.querySelectorAll('input[name="offenses"]:checked')]
-      .map(c => (c.closest('label')?.innerText || c.value).trim().replace(/\s+/g, ' '));
+    // Employee & Witness Inputs
+    const employeeSignNameInput = document.getElementById('employeeSignName');
+    const employeeSignPositionInput = document.getElementById('employeeSignPosition');
 
-    return {
-      docRefNo: val('docRefNo'), issueDate: val('issueDate'),
-      empName: val('empName'), empId: val('empId'),
-      department: val('department'), position: val('position'), vehicleReg: val('vehicleReg'),
-      incidentDate: val('incidentDate'), incidentTime: val('incidentTime'), incidentLocation: val('incidentLocation'),
-      offenses, otherOffense: val('otherOffense'), damageValue: val('damageValue'),
-      offenseDetails: val('offenseDetails'), employeeStatement: val('employeeStatement'),
-      penaltyLevel: lv ? levelMap[lv.value] : '',
-      issuerName, issuerPosition,
-      approverName: val('approverName'),
-      employeeSignName: val('employeeSignName'), employeeSignPosition: val('employeeSignPosition'),
-      witnessName: val('witnessName'), witnessPosition: val('witnessPosition')
-    };
-  }
+    const witnessNameInput = document.getElementById('witnessName');
+    const witnessPositionInput = document.getElementById('witnessPosition');
 
-  function notify(msg, ok) {
-    const t = $('toast');
-    if (!t) return console.log(msg);
-    t.textContent = msg;
-    t.className = (t.className || 'toast').replace(/\bshow\b/, '') + ' show';
-    setTimeout(() => t.classList.remove('show'), 3500);
-  }
+    // Buttons
+    const btnPrint = document.getElementById('btnPrint');
+    const btnSave = document.getElementById('btnSave');
+    const btnDemo = document.getElementById('btnDemo');
+    const btnReset = document.getElementById('btnReset');
+    const btnToggleRegistry = document.getElementById('btnToggleRegistry');
+    const btnCloseRegistry = document.getElementById('btnCloseRegistry');
+    const btnExportRegistry = document.getElementById('btnExportRegistry');
+    const btnImportRegistry = document.getElementById('btnImportRegistry');
+    const importFileInput = document.getElementById('importFileInput');
 
-  async function sendToSheet() {
-    const record = collectRecord();
-    if (!record.docRefNo || !record.empName) return; // ฟอร์มยังไม่ครบ ให้ app.js แจ้งเตือนเอง
-    try {
-      const res = await fetch(SYNC_CONFIG.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // เลี่ยง CORS preflight
-        body: JSON.stringify({ record })
-      });
-      const out = await res.json();
-      if (!out.ok) throw new Error(out.error);
-      notify('☁️ บันทึกลง Google Sheet แล้ว', true);
-    } catch (err) {
-      console.error('Sheet sync failed:', err);
-      notify('⚠️ บันทึกลง Google Sheet ไม่สำเร็จ: ' + err.message, false);
+    // Registry Modal Elements
+    const registryModal = document.getElementById('registryModal');
+    const registryTableBody = document.getElementById('registryTableBody');
+    const searchRegistryInput = document.getElementById('searchRegistryInput');
+    const searchSummaryTag = document.getElementById('searchSummaryTag');
+    const regBadgeCount = document.getElementById('regBadgeCount');
+    const formEmpAccumulatedAlert = document.getElementById('formEmpAccumulatedAlert');
+
+    // Offenses mapping
+    const offenseKeys = ['driving', 'maintenance', 'route', 'intoxication', 'discipline', 'behavior'];
+
+    // Helper: Format Thai Date String (e.g. 31 สิงหาคม 2569)
+    function formatThaiDate(dateStr) {
+        if (!dateStr) return '.............................................';
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        
+        const thaiMonths = [
+            'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+            'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+        ];
+        const day = d.getDate();
+        const month = thaiMonths[d.getMonth()];
+        const year = d.getFullYear() + 543;
+        return `${day} ${month} ${year}`;
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = $('btnSave');
-    if (btn) btn.addEventListener('click', () => setTimeout(sendToSheet, 0));
-  });
-})();
+    // Helper: Format Time
+    function formatTime(timeStr) {
+        if (!timeStr) return '............';
+        return timeStr;
+    }
+
+    // Get Active Issuer Name & Position
+    function getIssuerName() {
+        if (issuerNameSelect.value === 'other') {
+            return issuerNameCustom.value.trim();
+        }
+        return issuerNameSelect.value;
+    }
+
+    function getIssuerPosition() {
+        if (issuerPositionSelect.value === 'other') {
+            return issuerPositionCustom.value.trim();
+        }
+        return issuerPositionSelect.value;
+    }
+
+    // Toggle custom inputs for dropdowns
+    issuerNameSelect.addEventListener('change', () => {
+        if (issuerNameSelect.value === 'other') {
+            issuerNameCustom.style.display = 'block';
+            issuerNameCustom.focus();
+        } else {
+            issuerNameCustom.style.display = 'none';
+        }
+        renderPreview();
+    });
+
+    issuerPositionSelect.addEventListener('change', () => {
+        if (issuerPositionSelect.value === 'other') {
+            issuerPositionCustom.style.display = 'block';
+            issuerPositionCustom.focus();
+        } else {
+            issuerPositionCustom.style.display = 'none';
+        }
+        renderPreview();
+    });
+
+    // Update Text Field Preview
+    function updateTextPreview(inputEl, targetPvId, placeholder, isDate = false, isTime = false) {
+        const pvEl = document.getElementById(targetPvId);
+        if (!pvEl) return;
+
+        let val = inputEl ? inputEl.value.trim() : '';
+        if (val) {
+            if (isDate) {
+                pvEl.textContent = formatThaiDate(val);
+            } else if (isTime) {
+                pvEl.textContent = formatTime(val);
+            } else {
+                pvEl.textContent = val;
+            }
+            pvEl.classList.remove('dotted');
+            pvEl.classList.add('pv-filled');
+        } else {
+            pvEl.textContent = placeholder;
+            pvEl.classList.add('dotted');
+            pvEl.classList.remove('pv-filled');
+        }
+    }
+
+    // Update Offenses Checkboxes Preview
+    function updateOffensesPreview() {
+        offenseKeys.forEach(key => {
+            const chk = document.getElementById(`cat_${key}`);
+            const mark = document.getElementById(`mark_${key}`);
+            const col = document.getElementById(`pv_col_${key}`);
+
+            if (chk && mark && col) {
+                if (chk.checked) {
+                    mark.textContent = '[ ✓ ]';
+                    col.classList.add('checked');
+                } else {
+                    mark.textContent = '[   ]';
+                    col.classList.remove('checked');
+                }
+            }
+        });
+    }
+
+    // Update Penalty Level Preview
+    function updatePenaltyPreview() {
+        const selectedRadio = document.querySelector('input[name="penaltyLevel"]:checked');
+        const levels = ['level1', 'level2', 'level_final'];
+        
+        levels.forEach(lvl => {
+            const mark = document.getElementById(`mark_${lvl}`);
+            const item = document.getElementById(`pv_${lvl}`);
+            if (mark && item) {
+                mark.textContent = '[   ]';
+                item.classList.remove('checked');
+            }
+        });
+
+        if (selectedRadio) {
+            let targetLvl = '';
+            if (selectedRadio.value === 'level1') targetLvl = 'level1';
+            else if (selectedRadio.value === 'level2') targetLvl = 'level2';
+            else if (selectedRadio.value === 'final') targetLvl = 'level_final';
+
+            if (targetLvl) {
+                const mark = document.getElementById(`mark_${targetLvl}`);
+                const item = document.getElementById(`pv_${targetLvl}`);
+                if (mark && item) {
+                    mark.textContent = '[ ✓ ]';
+                    item.classList.add('checked');
+                }
+            }
+        }
+    }
+
+    // Update Signature Names & Positions Preview
+    function updateSignaturesPreview() {
+        // Issuer
+        const issuerVal = getIssuerName();
+        const issuerPosVal = getIssuerPosition();
+        const pvIssuer = document.getElementById('pv_issuerName');
+        const pvIssuerPos = document.getElementById('pv_issuerPosition');
+        if (pvIssuer) pvIssuer.textContent = issuerVal || '..................................................';
+        if (pvIssuerPos) pvIssuerPos.textContent = issuerPosVal || '...................................';
+
+        // Approver (Fixed คุณณัฏฐ์ สาระสังข์ / ผู้จัดการฝ่ายขนส่ง)
+        const pvApprover = document.getElementById('pv_approverName');
+        const pvApproverPos = document.getElementById('pv_approverPosition');
+        if (pvApprover) pvApprover.textContent = approverNameInput.value.trim() || 'คุณณัฏฐ์ สาระสังข์';
+        if (pvApproverPos) pvApproverPos.textContent = approverPositionInput.value.trim() || 'ผู้จัดการฝ่ายขนส่ง';
+
+        // Employee
+        const empSignVal = employeeSignNameInput.value.trim() || empNameInput.value.trim();
+        const empSignPosVal = employeeSignPositionInput.value.trim() || positionInput.value.trim();
+        const pvEmpSign = document.getElementById('pv_employeeSignName');
+        const pvEmpSignPos = document.getElementById('pv_employeeSignPosition');
+        if (pvEmpSign) pvEmpSign.textContent = empSignVal || '..................................................';
+        if (pvEmpSignPos) pvEmpSignPos.textContent = empSignPosVal || '...................................';
+
+        // Witness
+        const witnessVal = witnessNameInput.value.trim();
+        const witnessPosVal = witnessPositionInput.value.trim();
+        const pvWitness = document.getElementById('pv_witnessName');
+        const pvWitnessPos = document.getElementById('pv_witnessPosition');
+
+        if (pvWitness) pvWitness.textContent = witnessVal || '....................................';
+        if (pvWitnessPos) pvWitnessPos.textContent = witnessPosVal || '............................';
+    }
+
+    // Check Employee Warning History & Accumulated Count
+    function checkEmployeeWarningHistory() {
+        const empName = empNameInput.value.trim().toLowerCase();
+        const empId = empIdInput.value.trim().toLowerCase();
+
+        if (!empName && !empId) {
+            formEmpAccumulatedAlert.style.display = 'none';
+            return;
+        }
+
+        const registry = getRegistry();
+        const pastNotices = registry.filter(item => {
+            const matchName = empName && item.empName && item.empName.toLowerCase().includes(empName);
+            const matchId = empId && item.empId && item.empId.toLowerCase().includes(empId);
+            return matchName || matchId;
+        });
+
+        const count = pastNotices.length;
+        if (count === 0) {
+            formEmpAccumulatedAlert.style.display = 'none';
+        } else if (count === 1) {
+            formEmpAccumulatedAlert.className = 'form-emp-alert';
+            formEmpAccumulatedAlert.innerHTML = `<i class="fa-solid fa-circle-info"></i> <strong>ประวัติพนักงาน:</strong> พนักงานคนนี้มีประวัติใบเตือนในระบบแล้ว <strong>1 ครั้ง</strong>`;
+            formEmpAccumulatedAlert.style.display = 'flex';
+        } else if (count === 2) {
+            formEmpAccumulatedAlert.className = 'form-emp-alert';
+            formEmpAccumulatedAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <strong>เตือนสะสมใกล้ครบ!</strong> พนักงานคนนี้มีประวัติใบเตือนสะสมแล้ว <strong>2 ครั้ง</strong> (ฉบับนี้จะเป็นครั้งที่ 3/ครั้งสุดท้าย)`;
+            formEmpAccumulatedAlert.style.display = 'flex';
+        } else {
+            formEmpAccumulatedAlert.className = 'form-emp-alert danger';
+            formEmpAccumulatedAlert.innerHTML = `<i class="fa-solid fa-skull-crossbones"></i> <strong>แจ้งเตือนความเสี่ยงสูง!</strong> พนักงานคนนี้มีประวัติใบเตือนสะสมแล้ว <strong>${count} ครั้ง</strong> (เข้าเกณฑ์ตักเตือนครั้งสุดท้าย/เลิกจ้างตามมาตรา 119)`;
+            formEmpAccumulatedAlert.style.display = 'flex';
+        }
+    }
+
+    // Main Update Function
+    function renderPreview() {
+        updateTextPreview(docRefNoInput, 'pv_docRefNo', '...........................');
+        updateTextPreview(issueDateInput, 'pv_issueDate', '................................ me.............', true);
+        updateTextPreview(departmentInput, 'pv_department', '.............................................');
+        updateTextPreview(empNameInput, 'pv_empName', '.............................................');
+        updateTextPreview(empIdInput, 'pv_empId', '.............................................');
+        updateTextPreview(positionInput, 'pv_position', '.............................................');
+        updateTextPreview(vehicleRegInput, 'pv_vehicleReg', '.............................................');
+
+        updateTextPreview(incidentDateInput, 'pv_incidentDate', '.....................', true);
+        updateTextPreview(incidentTimeInput, 'pv_incidentTime', '............', false, true);
+        updateTextPreview(incidentLocationInput, 'pv_incidentLocation', '...................................................');
+
+        updateTextPreview(otherOffenseInput, 'pv_otherOffense', '...................................................................................');
+        updateTextPreview(damageValueInput, 'pv_damageValue', '...................................................');
+        updateTextPreview(offenseDetailsInput, 'pv_offenseDetails', '....................................................................................................................................................................................');
+        updateTextPreview(employeeStatementInput, 'pv_employeeStatement', '....................................................................................................................................................................................');
+
+        updateOffensesPreview();
+        updatePenaltyPreview();
+        updateSignaturesPreview();
+        checkEmployeeWarningHistory();
+    }
+
+    // Attach Event Listeners to all inputs
+    const allInputs = form.querySelectorAll('input, textarea');
+    allInputs.forEach(input => {
+        input.addEventListener('input', renderPreview);
+        input.addEventListener('change', renderPreview);
+    });
+
+    // Set Default Today's Date
+    const today = new Date().toISOString().split('T')[0];
+    if (issueDateInput) issueDateInput.value = today;
+    if (incidentDateInput) incidentDateInput.value = today;
+
+    // Toast Utility
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+
+    // ==========================================================
+    // GOOGLE SHEETS SYNC
+    // ==========================================================
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzna7z3ERBNSNzxzrCMxRH9AsNCDEDWl5fLa4E7TW0nw1p3uBx_0RlzW-ijy9sYNunJkw/exec';
+    async function sheetPost(payload) {
+        try {
+            const res = await fetch(SHEET_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            const out = await res.json();
+            if (!out.ok) throw new Error(out.error || 'unknown');
+            return true;
+        } catch (err) {
+            console.error('Sheet sync failed:', err);
+            showToast('⚠️ เชื่อมต่อ Google Sheet ไม่สำเร็จ (ข้อมูลยังบันทึกในเครื่องแล้ว)');
+            return false;
+        }
+    }
+    async function pullFromSheet() {
+        try {
+            const res = await fetch(SHEET_URL);
+            const out = await res.json();
+            if (!out.ok || !Array.isArray(out.data)) throw new Error(out.error || 'bad data');
+            let list = out.data;
+            // ครั้งแรก: ส่งข้อมูลเดิมในเครื่องที่ยังไม่มีในชีตขึ้นไป
+            if (!localStorage.getItem('warningSheetMigrated')) {
+                const have = new Set(list.map(r => r.docRefNo));
+                const localOnly = getRegistry().filter(r => !have.has(r.docRefNo));
+                if (localOnly.length && await sheetPost({ records: localOnly })) list = list.concat(localOnly);
+                localStorage.setItem('warningSheetMigrated', '1');
+            }
+            list.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+            saveRegistry(list);
+            renderRegistryTable();
+            renderPreview();
+        } catch (err) {
+            console.error('Sheet pull failed:', err);
+        }
+    }
+
+    // ==========================================================
+    // REGISTRY HISTORY & LOCAL STORAGE MANAGEMENT
+    // ==========================================================
+    function getRegistry() {
+        const stored = localStorage.getItem('warningNoticeRegistry');
+        if (!stored) return [];
+        try {
+            return JSON.parse(stored);
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveRegistry(list) {
+        localStorage.setItem('warningNoticeRegistry', JSON.stringify(list));
+        updateRegistryBadge();
+    }
+
+    function updateRegistryBadge() {
+        const list = getRegistry();
+        if (regBadgeCount) regBadgeCount.textContent = list.length;
+    }
+
+    // Auto-generate Doc Ref No if empty
+    function generateDocRefNo() {
+        const list = getRegistry();
+        const year = new Date().getFullYear() + 543;
+        const nextNum = String(list.length + 1).padStart(3, '0');
+        return `WN-${year}/${nextNum}`;
+    }
+
+    // Save Current Form to Registry
+    function saveFormToRegistry() {
+        if (!empNameInput.value.trim()) {
+            alert('กรุณาระบุชื่อพนักงานก่อนบันทึกเข้าทะเบียน');
+            empNameInput.focus();
+            return false;
+        }
+
+        let refNo = docRefNoInput.value.trim();
+        if (!refNo) {
+            refNo = generateDocRefNo();
+            docRefNoInput.value = refNo;
+            renderPreview();
+        }
+
+        const registry = getRegistry();
+        const record = {
+            id: 'REC_' + Date.now(),
+            docRefNo: refNo,
+            issueDate: issueDateInput.value,
+            department: departmentInput.value,
+            empName: empNameInput.value.trim(),
+            empId: empIdInput.value.trim(),
+            position: positionInput.value,
+            vehicleReg: vehicleRegInput.value,
+            incidentDate: incidentDateInput.value,
+            incidentTime: incidentTimeInput.value,
+            incidentLocation: incidentLocationInput.value,
+            offenses: offenseKeys.filter(k => document.getElementById(`cat_${k}`).checked),
+            otherOffense: otherOffenseInput.value,
+            damageValue: damageValueInput.value,
+            offenseDetails: offenseDetailsInput.value,
+            employeeStatement: employeeStatementInput.value,
+            penaltyLevel: document.querySelector('input[name="penaltyLevel"]:checked')?.value || 'level1',
+            issuerNameSelect: issuerNameSelect.value,
+            issuerNameCustom: issuerNameCustom.value,
+            issuerPositionSelect: issuerPositionSelect.value,
+            issuerPositionCustom: issuerPositionCustom.value,
+            issuerName: getIssuerName(),
+            issuerPosition: getIssuerPosition(),
+            approverName: approverNameInput.value,
+            approverPosition: approverPositionInput.value,
+            employeeSignName: employeeSignNameInput.value,
+            employeeSignPosition: employeeSignPositionInput.value,
+            witnessName: witnessNameInput.value,
+            witnessPosition: witnessPositionInput.value,
+            createdAt: new Date().toISOString()
+        };
+
+        // Check if updating existing by docRefNo
+        const existingIdx = registry.findIndex(r => r.docRefNo === refNo);
+        if (existingIdx >= 0) {
+            registry[existingIdx] = record;
+        } else {
+            registry.unshift(record);
+        }
+
+        saveRegistry(registry);
+        renderRegistryTable();
+        renderPreview();
+        sheetPost({ record }).then(ok => { if (ok) showToast('☁️ บันทึกลง Google Sheet แล้ว'); });
+        return true;
+    }
+
+    // Load Record into Form
+    function loadRecordToForm(record) {
+        docRefNoInput.value = record.docRefNo || '';
+        issueDateInput.value = record.issueDate || today;
+        departmentInput.value = record.department || '';
+        empNameInput.value = record.empName || '';
+        empIdInput.value = record.empId || '';
+        positionInput.value = record.position || '';
+        vehicleRegInput.value = record.vehicleReg || '';
+
+        incidentDateInput.value = record.incidentDate || today;
+        incidentTimeInput.value = record.incidentTime || '';
+        incidentLocationInput.value = record.incidentLocation || '';
+
+        otherOffenseInput.value = record.otherOffense || '';
+        damageValueInput.value = record.damageValue || '';
+        offenseDetailsInput.value = record.offenseDetails || '';
+        employeeStatementInput.value = record.employeeStatement || '';
+
+        if (record.issuerNameSelect) {
+            issuerNameSelect.value = record.issuerNameSelect;
+            if (record.issuerNameSelect === 'other') {
+                issuerNameCustom.style.display = 'block';
+                issuerNameCustom.value = record.issuerNameCustom || record.issuerName || '';
+            } else {
+                issuerNameCustom.style.display = 'none';
+            }
+        }
+
+        if (record.issuerPositionSelect) {
+            issuerPositionSelect.value = record.issuerPositionSelect;
+            if (record.issuerPositionSelect === 'other') {
+                issuerPositionCustom.style.display = 'block';
+                issuerPositionCustom.value = record.issuerPositionCustom || record.issuerPosition || '';
+            } else {
+                issuerPositionCustom.style.display = 'none';
+            }
+        }
+
+        employeeSignNameInput.value = record.employeeSignName || '';
+        employeeSignPositionInput.value = record.employeeSignPosition || '';
+        witnessNameInput.value = record.witnessName || '';
+        witnessPositionInput.value = record.witnessPosition || '';
+
+        offenseKeys.forEach(k => {
+            const chk = document.getElementById(`cat_${k}`);
+            if (chk) chk.checked = Array.isArray(record.offenses) && record.offenses.includes(k);
+        });
+
+        if (record.penaltyLevel) {
+            const r = document.querySelector(`input[name="penaltyLevel"][value="${record.penaltyLevel}"]`);
+            if (r) r.checked = true;
+        }
+
+        renderPreview();
+        registryModal.classList.remove('active');
+        showToast(`โหลดเอกสารเลขที่ ${record.docRefNo} เรียบร้อยแล้ว`);
+    }
+
+    // Render Registry Table with Live Filter & Accumulated Warning Badges
+    function renderRegistryTable() {
+        const list = getRegistry();
+        const filterText = searchRegistryInput ? searchRegistryInput.value.trim().toLowerCase() : '';
+
+        // Filter items
+        const filtered = list.filter(item => {
+            if (!filterText) return true;
+            return (item.docRefNo && item.docRefNo.toLowerCase().includes(filterText)) ||
+                   (item.empName && item.empName.toLowerCase().includes(filterText)) ||
+                   (item.empId && item.empId.toLowerCase().includes(filterText)) ||
+                   (item.vehicleReg && item.vehicleReg.toLowerCase().includes(filterText)) ||
+                   (item.department && item.department.toLowerCase().includes(filterText));
+        });
+
+        if (searchSummaryTag) {
+            searchSummaryTag.textContent = filterText ? `พบ ${filtered.length} จากทั้งหมด ${list.length} รายการ` : `ทั้งหมด ${list.length} รายการ`;
+        }
+
+        if (filtered.length === 0) {
+            registryTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">ไม่พบข้อมูลใบเตือน${filterText ? ' ที่ค้นหา' : ''}</td></tr>`;
+            return;
+        }
+
+        // Count accumulated warnings per employee
+        const empCounts = {};
+        list.forEach(item => {
+            const key = (item.empName || item.empId || '').trim().toLowerCase();
+            if (key) {
+                empCounts[key] = (empCounts[key] || 0) + 1;
+            }
+        });
+
+        let html = '';
+        filtered.forEach(item => {
+            const empKey = (item.empName || item.empId || '').trim().toLowerCase();
+            const accumCount = empCounts[empKey] || 1;
+
+            let badgeClass = 'badge-count-1';
+            let badgeText = `สะสม ${accumCount} ใบ`;
+
+            if (accumCount === 2) {
+                badgeClass = 'badge-count-2';
+                badgeText = `⚠️ สะสม 2 ใบ`;
+            } else if (accumCount >= 3) {
+                badgeClass = 'badge-count-3';
+                badgeText = `🚨 สะสม ${accumCount} ใบ!`;
+            }
+
+            let penaltyText = 'เตือนครั้งที่ 1';
+            if (item.penaltyLevel === 'level2') penaltyText = 'เตือนครั้งที่ 2';
+            else if (item.penaltyLevel === 'final') penaltyText = 'ครั้งสุดท้าย';
+
+            html += `
+                <tr>
+                    <td><strong>${item.docRefNo || '-'}</strong></td>
+                    <td>${item.issueDate ? formatThaiDate(item.issueDate) : '-'}</td>
+                    <td><strong>${item.empName || '-'}</strong> <br><small class="text-muted">รหัส: ${item.empId || '-'}</small></td>
+                    <td>${item.department || '-'}<br><small class="text-muted">${item.position || '-'}</small></td>
+                    <td>${item.vehicleReg || '-'}</td>
+                    <td>${penaltyText}</td>
+                    <td><span class="badge-count ${badgeClass}">${badgeText}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary btn-load-rec" data-id="${item.id}">
+                            <i class="fa-solid fa-folder-open"></i> เปิด
+                        </button>
+                        <button class="btn btn-sm btn-danger-sm btn-del-rec" data-id="${item.id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        registryTableBody.innerHTML = html;
+
+        // Attach Load Handlers
+        registryTableBody.querySelectorAll('.btn-load-rec').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const recId = e.currentTarget.getAttribute('data-id');
+                const targetRec = list.find(r => r.id === recId);
+                if (targetRec) loadRecordToForm(targetRec);
+            });
+        });
+
+        // Attach Delete Handlers
+        registryTableBody.querySelectorAll('.btn-del-rec').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const recId = e.currentTarget.getAttribute('data-id');
+                if (confirm('คุณต้องการลบประวัติใบเตือนรายการนี้ใช่หรือไม่?')) {
+                    const delRec = list.find(r => r.id === recId);
+                    if (delRec) sheetPost({ action: 'delete', docRefNo: delRec.docRefNo });
+                    const newList = list.filter(r => r.id !== recId);
+                    saveRegistry(newList);
+                    renderRegistryTable();
+                    renderPreview();
+                    showToast('ลบประวัติรายการเรียบร้อยแล้ว');
+                }
+            });
+        });
+    }
+
+    // Export Registry JSON
+    if (btnExportRegistry) {
+        btnExportRegistry.addEventListener('click', () => {
+            const list = getRegistry();
+            if (list.length === 0) {
+                alert('ยังไม่มีประวัติใบเตือนในระบบให้สำรองข้อมูล');
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(list, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `warning_registry_backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('สำรองไฟล์ประวัติสำเร็จแล้ว!');
+        });
+    }
+
+    // Import Registry JSON
+    if (btnImportRegistry && importFileInput) {
+        btnImportRegistry.addEventListener('click', () => {
+            importFileInput.click();
+        });
+
+        importFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedList = JSON.parse(event.target.result);
+                    if (Array.isArray(importedList)) {
+                        const currentList = getRegistry();
+                        // Merge by id
+                        const idMap = new Map();
+                        currentList.forEach(item => idMap.set(item.id || item.docRefNo, item));
+                        importedList.forEach(item => idMap.set(item.id || item.docRefNo, item));
+
+                        const merged = Array.from(idMap.values());
+                        saveRegistry(merged);
+                        sheetPost({ records: importedList });
+                        renderRegistryTable();
+                        renderPreview();
+                        showToast(`นำเข้าข้อมูลประวัติสำเร็จ ${importedList.length} รายการ!`);
+                    } else {
+                        alert('รูปแบบไฟล์ JSON ไม่ถูกต้อง');
+                    }
+                } catch (err) {
+                    alert('เกิดข้อผิดพลาดในการอ่านไฟล์ JSON');
+                }
+                importFileInput.value = '';
+            };
+            reader.readAsText(file);
+        });
+    }
+
+    // Search input live event
+    if (searchRegistryInput) {
+        searchRegistryInput.addEventListener('input', renderRegistryTable);
+    }
+
+    // Toggle Registry Modal
+    btnToggleRegistry.addEventListener('click', () => {
+        renderRegistryTable();
+        registryModal.classList.add('active');
+    });
+
+    btnCloseRegistry.addEventListener('click', () => {
+        registryModal.classList.remove('active');
+    });
+
+    registryModal.addEventListener('click', (e) => {
+        if (e.target === registryModal) {
+            registryModal.classList.remove('active');
+        }
+    });
+
+    // Save Button Handler
+    btnSave.addEventListener('click', () => {
+        if (saveFormToRegistry()) {
+            showToast('บันทึกข้อมูลเข้าทะเบียนประวัติใบเตือนเรียบร้อยแล้ว!');
+        }
+    });
+
+    // Demo Data Action
+    btnDemo.addEventListener('click', () => {
+        docRefNoInput.value = generateDocRefNo();
+        issueDateInput.value = today;
+        departmentInput.value = 'ฝ่ายขนส่งและโลจิสติกส์';
+        empNameInput.value = 'นาย สมชาย ขยันดี';
+        empIdInput.value = 'EMP-67089';
+        positionInput.value = 'พนักงานขับรถขนส่งสินค้า';
+        vehicleRegInput.value = '71-4567 กทม. (สาย S35)';
+
+        incidentDateInput.value = today;
+        incidentTimeInput.value = '14:30';
+        incidentLocationInput.value = 'เส้นทางพุทธมณฑล สาย 4';
+
+        document.getElementById('cat_driving').checked = true;
+        document.getElementById('cat_maintenance').checked = true;
+        document.getElementById('cat_route').checked = false;
+        document.getElementById('cat_intoxication').checked = false;
+        document.getElementById('cat_discipline').checked = false;
+        document.getElementById('cat_behavior').checked = false;
+
+        otherOffenseInput.value = '-';
+        damageValueInput.value = 'ภาพผ้าใบตัวแม่ชำรุด (อ้างอิง INC-69/04)';
+        offenseDetailsInput.value = 'ขับรถเร็วเกินอัตราที่บริษัทกำหนด และละเลยการตรวจเช็คสภาพรถตามระยะ ปล่อยให้ผ้าใบตัวแม่ของรถ S35 ชำรุดเสียหาย';
+        employeeStatementInput.value = 'พนักงานยอมรับว่าละเลยการตรวจเช็คสภาพผ้าใบก่อนออกปฏิบัติงาน';
+
+        issuerNameSelect.value = 'คุณวิภา จันทร์แดง';
+        issuerNameCustom.style.display = 'none';
+        issuerPositionSelect.value = 'หัวหน้าแผนกขนส่ง';
+        issuerPositionCustom.style.display = 'none';
+
+        approverNameInput.value = 'คุณณัฏฐ์ สาระสังข์';
+        approverPositionInput.value = 'ผู้จัดการฝ่ายขนส่ง';
+
+        employeeSignNameInput.value = 'นาย สมชาย ขยันดี';
+        employeeSignPositionInput.value = 'พนักงานขับรถขนส่งสินค้า';
+
+        witnessNameInput.value = 'นางสาว วาสนา พยาน';
+        witnessPositionInput.value = 'เจ้าหน้าที่ฝ่ายทรัพยากรบุคคล';
+
+        renderPreview();
+        showToast('เติมข้อมูลตัวอย่างครบถ้วนสมบูรณ์แล้ว!');
+    });
+
+    // Reset Form Action
+    btnReset.addEventListener('click', () => {
+        form.reset();
+        docRefNoInput.value = '';
+        issueDateInput.value = today;
+        incidentDateInput.value = today;
+        issuerNameSelect.value = 'คุณวิภา จันทร์แดง';
+        issuerNameCustom.style.display = 'none';
+        issuerPositionSelect.value = 'หัวหน้าแผนกขนส่ง';
+        issuerPositionCustom.style.display = 'none';
+        approverNameInput.value = 'คุณณัฏฐ์ สาระสังข์';
+        approverPositionInput.value = 'ผู้จัดการฝ่ายขนส่ง';
+        renderPreview();
+        showToast('ล้างข้อมูลฟอร์มเรียบร้อยแล้ว');
+    });
+
+    // Print Action (Saves to registry first automatically!)
+    btnPrint.addEventListener('click', () => {
+        saveFormToRegistry();
+        window.print();
+    });
+
+    // Initialize
+    updateRegistryBadge();
+    docRefNoInput.value = generateDocRefNo();
+    renderPreview();
+    pullFromSheet().then(() => {
+        if (!docRefNoInput.value.trim()) docRefNoInput.value = generateDocRefNo();
+    });
+});
 
 </script>
 </body>
