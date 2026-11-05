@@ -557,5 +557,74 @@
     <div id="toast" class="toast"></div>
 
     <script src="app.js"></script>
+    <script>
+/**
+ * sheets-sync.js - ส่งข้อมูลใบเตือนไป Google Sheet ทุกครั้งที่กด "บันทึกทะเบียน"
+ * ไม่ต้องแก้ app.js
+ */
+const SYNC_CONFIG = {
+  url: 'https://script.google.com/macros/s/AKfycbzna7z3ERBNSNzxzrCMxRH9AsNCDEDWl5fLa4E7TW0nw1p3uBx_0RlzW-ijy9sYNunJkw/exec'
+};
+
+(function () {
+  const $ = id => document.getElementById(id);
+  const val = id => ($(id) ? $(id).value.trim() : '');
+
+  function collectRecord() {
+    const issuerName = val('issuerNameSelect') === 'other' ? val('issuerNameCustom') : val('issuerNameSelect');
+    const issuerPosition = val('issuerPositionSelect') === 'other' ? val('issuerPositionCustom') : val('issuerPositionSelect');
+    const levelMap = { level1: 'ครั้งที่ 1', level2: 'ครั้งที่ 2', final: 'ครั้งสุดท้าย' };
+    const lv = document.querySelector('input[name="penaltyLevel"]:checked');
+    const offenses = [...document.querySelectorAll('input[name="offenses"]:checked')]
+      .map(c => (c.closest('label')?.innerText || c.value).trim().replace(/\s+/g, ' '));
+
+    return {
+      docRefNo: val('docRefNo'), issueDate: val('issueDate'),
+      empName: val('empName'), empId: val('empId'),
+      department: val('department'), position: val('position'), vehicleReg: val('vehicleReg'),
+      incidentDate: val('incidentDate'), incidentTime: val('incidentTime'), incidentLocation: val('incidentLocation'),
+      offenses, otherOffense: val('otherOffense'), damageValue: val('damageValue'),
+      offenseDetails: val('offenseDetails'), employeeStatement: val('employeeStatement'),
+      penaltyLevel: lv ? levelMap[lv.value] : '',
+      issuerName, issuerPosition,
+      approverName: val('approverName'),
+      employeeSignName: val('employeeSignName'), employeeSignPosition: val('employeeSignPosition'),
+      witnessName: val('witnessName'), witnessPosition: val('witnessPosition')
+    };
+  }
+
+  function notify(msg, ok) {
+    const t = $('toast');
+    if (!t) return console.log(msg);
+    t.textContent = msg;
+    t.className = (t.className || 'toast').replace(/\bshow\b/, '') + ' show';
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  async function sendToSheet() {
+    const record = collectRecord();
+    if (!record.docRefNo || !record.empName) return; // ฟอร์มยังไม่ครบ ให้ app.js แจ้งเตือนเอง
+    try {
+      const res = await fetch(SYNC_CONFIG.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // เลี่ยง CORS preflight
+        body: JSON.stringify({ record })
+      });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error);
+      notify('☁️ บันทึกลง Google Sheet แล้ว', true);
+    } catch (err) {
+      console.error('Sheet sync failed:', err);
+      notify('⚠️ บันทึกลง Google Sheet ไม่สำเร็จ: ' + err.message, false);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = $('btnSave');
+    if (btn) btn.addEventListener('click', () => setTimeout(sendToSheet, 0));
+  });
+})();
+
+</script>
 </body>
 </html>
