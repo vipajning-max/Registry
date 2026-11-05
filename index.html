@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบกรอกและทะเบียนหนังสือเตือนพนักงาน (Employee Warning Notice Registry System)</title>
+    <!-- Google Fonts: Sarabun & Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Header Navbar -->
+    <header class="app-header no-print">
+        <div class="header-content">
+            <div class="brand">
+                <i class="fa-solid fa-file-signature logo-icon"></i>
+                <div>
+                    <h1>ระบบกรอกและทะเบียนหนังสือเตือนพนักงาน</h1>
+                    <p>บริษัท เซ้าท์อีสต์ทรานสปอร์ต จำกัด - SOUTHEAST TRANSPORT CO.,LTD.</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button type="button" class="btn btn-info" id="btnToggleRegistry">
+                    <i class="fa-solid fa-box-archive"></i> ทะเบียนประวัติย้อนหลัง (<span id="regBadgeCount">0</span>)
+                </button>
+                <button type="button" class="btn btn-secondary" id="btnDemo">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ตัวอย่าง
+                </button>
+                <button type="button" class="btn btn-outline" id="btnReset">
+                    <i class="fa-solid fa-rotate-left"></i> ล้างฟอร์ม
+                </button>
+                <button type="button" class="btn btn-success" id="btnSave">
+                    <i class="fa-solid fa-floppy-disk"></i> บันทึกทะเบียน
+                </button>
+                <button type="button" class="btn btn-primary" id="btnPrint">
+                    <i class="fa-solid fa-print"></i> พิมพ์ / บันทึก PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Registry History Modal Drawer -->
+    <div class="registry-modal-overlay no-print" id="registryModal">
+        <div class="registry-modal-card">
+            <div class="registry-modal-header">
+                <h3><i class="fa-solid fa-folder-open"></i> ทะเบียนประวัติใบเตือนพนักงานย้อนหลัง</h3>
+                <div class="modal-header-btns">
+                    <button type="button" class="btn btn-sm btn-outline" id="btnExportRegistry">
+                        <i class="fa-solid fa-download"></i> สำรองข้อมูล (Export)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline" id="btnImportRegistry">
+                        <i class="fa-solid fa-upload"></i> นำเข้าประวัติ (Import)
+                    </button>
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    <button class="close-modal-btn" id="btnCloseRegistry">&times;</button>
+                </div>
+            </div>
+            <div class="registry-modal-body">
+                
+                <!-- Search & Filter Bar -->
+                <div class="registry-search-box">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchRegistryInput" placeholder="ค้นหาด้วย ชื่อพนักงาน / รหัสพนักงาน / เลขที่ใบเตือน / ทะเบียนรถ...">
+                    </div>
+                    <div class="search-summary-tag" id="searchSummaryTag">ทั้งหมด 0 รายการ</div>
+                </div>
+
+                <!-- Alert Warning Banner for Employees reaching 2-3 warnings -->
+                <div id="empWarningAlertBox" class="emp-warning-alert-box" style="display: none;"></div>
+
+                <!-- Registry Table -->
+                <div class="table-responsive">
+                    <table class="registry-table">
+                        <thead>
+                            <tr>
+                                <th>เลขที่เอกสาร</th>
+                                <th>วันที่ออก</th>
+                                <th>ชื่อ-นามสกุล</th>
+                                <th>ฝ่าย/ตำแหน่ง</th>
+                                <th>ทะเบียนรถ</th>
+                                <th>ระดับการลงโทษ</th>
+                                <th>ประวัติสะสม</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registryTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center py-4 text-muted">ยังไม่มีประวัติใบเตือนในระบบ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <!-- Form Section (Left Column) -->
+        <aside class="form-container no-print">
+            
+            <!-- Employee History Warning Alert Badge (Shows near form) -->
+            <div id="formEmpAccumulatedAlert" class="form-emp-alert" style="display: none;"></div>
+
+            <form id="warningForm" onsubmit="return false;">
+                
+                <!-- Section 1: Document & Employee Header Info -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-id-card"></i> 1. ข้อมูลทั่วไปและพนักงาน
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-2">
+                            <div class="form-group">
+                                <label for="docRefNo">เลขที่เอกสาร (Doc Ref No.)</label>
+                                <input type="text" id="docRefNo" name="docRefNo" placeholder="เช่น WN-2569/001">
+                            </div>
+                            <div class="form-group">
+                                <label for="issueDate">วันที่ออกหนังสือ <span class="required">*</span></label>
+                                <input type="date" id="issueDate" name="issueDate">
+                            </div>
+                        </div>
+
+                        <div class="form-row col-2">
+                            <div class="form-group">
+                                <label for="empName">ชื่อ-นามสกุล พนักงาน <span class="required">*</span></label>
+                                <input type="text" id="empName" name="empName" placeholder="ระบุชื่อพนักงาน (ระบบจะค้นหาประวัติสะสมให้อัตโนมัติ)">
+                            </div>
+                            <div class="form-group">
+                                <label for="empId">รหัสพนักงาน <span class="required">*</span></label>
+                                <input type="text" id="empId" name="empId" placeholder="เช่น EMP-67012">
+                            </div>
+                        </div>
+
+                        <div class="form-row col-3">
+                            <div class="form-group">
+                                <label for="department">ฝ่าย / แผนก</label>
+                                <input type="text" id="department" name="department" placeholder="เช่น ฝ่ายขนส่ง / คลังสินค้า">
+                            </div>
+                            <div class="form-group">
+                                <label for="position">ตำแหน่ง</label>
+                                <input type="text" id="position" name="position" placeholder="เช่น พนักงานขับรถ">
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicleReg">ทะเบียนรถ / หมายเลขรถ</label>
+                                <input type="text" id="vehicleReg" name="vehicleReg" placeholder="เช่น 71-4567 กทม. (S35)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Offense Incident Details -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 2. รายละเอียดและสาเหตุการกระทำความผิด
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-3">
+                            <div class="form-group">
+                                <label for="incidentDate">วันที่เกิดเหตุ <span class="required">*</span></label>
+                                <input type="date" id="incidentDate" name="incidentDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="incidentTime">เวลาเกิดเหตุ</label>
+                                <input type="time" id="incidentTime" name="incidentTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="incidentLocation">สถานที่เกิดเหตุ</label>
+                                <input type="text" id="incidentLocation" name="incidentLocation" placeholder="เช่น คลังสินค้า B / บางนา-ตราด">
+                            </div>
+                        </div>
+
+                        <label class="section-subtitle">เลือกฐานความผิด (เลือกได้มากกว่า 1 ข้อ):</label>
+                        <div class="offense-checkbox-grid">
+                            
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_driving" name="offenses" value="driving">
+                                    <span>ความผิดเกี่ยวกับการขับขี่และความปลอดภัย</span>
+                                </label>
+                                <p class="checkbox-desc">ขับรถเร็วเกินกำหนด / ขับขี่น่าหวาดเสียว / ฝ่าฝืนกฎจราจร</p>
+                            </div>
+
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_maintenance" name="offenses" value="maintenance">
+                                    <span>ความผิดเกี่ยวกับการดูแลรักษารถ</span>
+                                </label>
+                                <p class="checkbox-desc">ละเลยการตรวจเช็คสภาพรถตามระยะ / ปล่อยให้รถเสียหาย</p>
+                            </div>
+
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_route" name="offenses" value="route">
+                                    <span>ความผิดเกี่ยวกับเส้นทางและเวลาปฏิบัติงาน</span>
+                                </label>
+                                <p class="checkbox-desc">ใช้รถนอกเส้นทาง / นำรถไปใช้ส่วนตัวโดยไม่ได้รับอนุญาต</p>
+                            </div>
+
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_intoxication" name="offenses" value="intoxication">
+                                    <span>ความผิดเกี่ยวกับของมึนเมา</span>
+                                </label>
+                                <p class="checkbox-desc">ดื่มสุรา ของมึนเมา ระหว่างปฏิบัติหน้าที่</p>
+                            </div>
+
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_discipline" name="offenses" value="discipline">
+                                    <span>ความผิดเกี่ยวกับเวลาลางานและวินัยทั่วไป</span>
+                                </label>
+                                <p class="checkbox-desc">ละทิ้งหน้าที่ / ขาดงานโดยไม่แจ้งล่วงหน้า / มาสายเป็นประจำ</p>
+                            </div>
+
+                            <div class="checkbox-box">
+                                <label class="checkbox-label font-weight-bold">
+                                    <input type="checkbox" id="cat_behavior" name="offenses" value="behavior">
+                                    <span>ความผิดเกี่ยวกับพฤติกรรม</span>
+                                </label>
+                                <p class="checkbox-desc">แสดงกิริยาหรือวาจาไม่สุภาพต่อลูกค้า/เพื่อนร่วมงาน</p>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row col-2 mt-3">
+                            <div class="form-group">
+                                <label for="otherOffense">ความผิดฐานอื่น ๆ (ถ้ามี):</label>
+                                <input type="text" id="otherOffense" name="otherOffense" placeholder="ระบุฐานความผิดอื่นๆ">
+                            </div>
+                            <div class="form-group">
+                                <label for="damageValue">มูลค่าความเสียหาย / เลขที่อ้างอิงอุบัติเหตุ (ถ้ามี):</label>
+                                <input type="text" id="damageValue" name="damageValue" placeholder="เช่น ผ้าใบชำรุด / เลขที่รายงาน INC-69/04">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="offenseDetails">รายละเอียดพฤติการณ์เพิ่มเติม / หลักฐานแนบ:</label>
+                            <textarea id="offenseDetails" name="offenseDetails" rows="3" placeholder="อธิบายรายละเอียดเหตุการณ์พฤติการณ์โดยสรุป..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employeeStatement">คำชี้แจงหรือข้อแก้ตัวของพนักงาน (ถ้ามี):</label>
+                            <textarea id="employeeStatement" name="employeeStatement" rows="2" placeholder="ระบุคำชี้แจงของพนักงาน (ถ้ามี)..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Disciplinary Action -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-gavel"></i> 3. การลงโทษทางวินัย (Disciplinary Action)
+                    </div>
+                    <div class="card-body">
+                        <label class="section-subtitle" style="margin-top: 0;">ระดับการลงโทษ:</label>
+                        <div class="penalty-options">
+                            <label class="radio-card">
+                                <input type="radio" name="penaltyLevel" value="level1">
+                                <div class="radio-content">
+                                    <span class="radio-title">ตักเตือนเป็นลายลักษณ์อักษร ครั้งที่ 1</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card">
+                                <input type="radio" name="penaltyLevel" value="level2">
+                                <div class="radio-content">
+                                    <span class="radio-title">ตักเตือนเป็นลายลักษณ์อักษร ครั้งที่ 2</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card warning-danger">
+                                <input type="radio" name="penaltyLevel" value="final">
+                                <div class="radio-content">
+                                    <span class="radio-title">ตักเตือนเป็นลายลักษณ์อักษร "ครั้งสุดท้าย"</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Signatures & Positions (Preset Dropdowns & Fixed Approver) -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-pen-nib"></i> 4. ข้อมูลผู้ลงนามและตำแหน่ง (Signatures & Approvals)
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- Issuer Select Row -->
+                        <div class="form-row col-2">
+                            <div class="form-group">
+                                <label for="issuerNameSelect">ผู้ออกหนังสือเตือน (เลือกรายชื่อ)</label>
+                                <select id="issuerNameSelect" class="form-select">
+                                    <option value="คุณวิภา จันทร์แดง">คุณวิภา จันทร์แดง</option>
+                                    <option value="คุณปรีชญา เชื้อหนองไฮ">คุณปรีชญา เชื้อหนองไฮ</option>
+                                    <option value="other">-- ระบุชื่ออื่น... --</option>
+                                </select>
+                                <input type="text" id="issuerNameCustom" style="display: none; margin-top: 0.3rem;" placeholder="ระบุชื่อ-นามสกุล ผู้ออกหนังสือ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issuerPositionSelect">ตำแหน่ง ผู้ออกหนังสือ (เลือกตำแหน่ง)</label>
+                                <select id="issuerPositionSelect" class="form-select">
+                                    <option value="หัวหน้าแผนกขนส่ง">หัวหน้าแผนกขนส่ง</option>
+                                    <option value="เจ้าหน้าที่ความปลอดภัย วิชาชีพ">เจ้าหน้าที่ความปลอดภัย วิชาชีพ</option>
+                                    <option value="other">-- ระบุตำแหน่งอื่น... --</option>
+                                </select>
+                                <input type="text" id="issuerPositionCustom" style="display: none; margin-top: 0.3rem;" placeholder="ระบุตำแหน่ง">
+                            </div>
+                        </div>
+
+                        <!-- Fixed Approver Row -->
+                        <div class="form-row col-2 fixed-approver-box">
+                            <div class="form-group">
+                                <label>ผู้บังคับบัญชา / ผู้อนุมัติ <span class="badge-locked"><i class="fa-solid fa-lock"></i> ล็อคประจำตำแหน่ง</span></label>
+                                <input type="text" id="approverName" value="คุณณัฏฐ์ สาระสังข์" readonly class="input-readonly">
+                            </div>
+                            <div class="form-group">
+                                <label>ตำแหน่ง ผู้อนุมัติ <span class="badge-locked"><i class="fa-solid fa-lock"></i> ล็อคประจำตำแหน่ง</span></label>
+                                <input type="text" id="approverPosition" value="ผู้จัดการฝ่ายขนส่ง" readonly class="input-readonly">
+                            </div>
+                        </div>
+
+                        <!-- Employee & Witness Row -->
+                        <div class="form-row col-2">
+                            <div class="form-group">
+                                <label for="employeeSignName">พนักงานผู้รับทราบคำเตือน</label>
+                                <input type="text" id="employeeSignName" name="employeeSignName" placeholder="ชื่อ-นามสกุล พนักงาน">
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeSignPosition">ตำแหน่ง พนักงาน</label>
+                                <input type="text" id="employeeSignPosition" name="employeeSignPosition" placeholder="เช่น พนักงานขับรถ">
+                            </div>
+                        </div>
+
+                        <div class="form-row col-2 mt-2">
+                            <div class="form-group">
+                                <label for="witnessName">พยาน</label>
+                                <input type="text" id="witnessName" name="witnessName" placeholder="ชื่อ-นามสกุล พยาน">
+                            </div>
+                            <div class="form-group">
+                                <label for="witnessPosition">ตำแหน่ง พยาน</label>
+                                <input type="text" id="witnessPosition" name="witnessPosition" placeholder="เช่น เจ้าหน้าที่ฝ่ายบุคคล">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </aside>
+
+        <!-- Preview Section (Right Column / Printable Paper A4) -->
+        <main class="preview-container">
+            <div class="page-a4" id="documentPaper">
+                
+                <div class="paper-inner-flex">
+                    
+                    <!-- Top Right Doc Ref No Container -->
+                    <div class="doc-top-ref-container">
+                        <span class="doc-ref-text-top">เลขที่เอกสาร : <span id="pv_docRefNo" class="dotted-inline">...........................</span></span>
+                    </div>
+
+                    <!-- Official Company Header Banner (Centered, Balanced Sizing) -->
+                    <div class="company-header-banner-box">
+                        <img src="logo-02.png" alt="บริษัท เซ้าท์อีสต์ทรานสปอร์ต จำกัด / SOUTHEAST TRANSPORT CO.,LTD." class="full-company-logo-img">
+                    </div>
+
+                    <!-- Document Title Header -->
+                    <div class="doc-title-box">
+                        <h2 class="doc-title-th">หนังสือเตือนพนักงาน</h2>
+                        <h3 class="doc-title-en">EMPLOYEE WARNING NOTICE</h3>
+                    </div>
+
+                    <!-- Document Header Info Grid -->
+                    <div class="doc-header-grid">
+                        <div class="doc-info-item">
+                            <span class="info-label">วันที่ออกหนังสือ :</span>
+                            <span class="info-value dotted" id="pv_issueDate">.............................................</span>
+                        </div>
+                        <div class="doc-info-item">
+                            <span class="info-label">ฝ่าย/แผนก :</span>
+                            <span class="info-value dotted" id="pv_department">.............................................</span>
+                        </div>
+                        <div class="doc-info-item">
+                            <span class="info-label">ชื่อพนักงาน :</span>
+                            <span class="info-value dotted" id="pv_empName">.............................................</span>
+                        </div>
+                        <div class="doc-info-item">
+                            <span class="info-label">รหัสพนักงาน :</span>
+                            <span class="info-value dotted" id="pv_empId">.............................................</span>
+                        </div>
+                        <div class="doc-info-item">
+                            <span class="info-label">ตำแหน่ง :</span>
+                            <span class="info-value dotted" id="pv_position">.............................................</span>
+                        </div>
+                        <div class="doc-info-item">
+                            <span class="info-label">ทะเบียนรถ/หมายเลขรถ :</span>
+                            <span class="info-value dotted" id="pv_vehicleReg">.............................................</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 1 Document Preview -->
+                    <div class="doc-section">
+                        <h4 class="section-heading">1. รายละเอียดและสาเหตุการกระทำความผิด (Offense Details)</h4>
+                        <p class="doc-paragraph formal-opening-paragraph">
+                            เนื่องด้วยท่านได้ปฏิบัติหน้าที่ในตำแหน่งดังกล่าว และปรากฏว่าเมื่อวันที่ <span class="pv-text dotted-inline" id="pv_incidentDate">.....................</span> 
+                            เวลา <span class="pv-text dotted-inline" id="pv_incidentTime">............</span> น. ณ สถานที่เกิดเหตุ <span class="pv-text dotted-inline" id="pv_incidentLocation">...................................................</span> 
+                            ท่านได้กระทำการอันเป็นการฝ่าฝืนระเบียบข้อบังคับเกี่ยวกับการทำงาน ข้อกำหนดด้านความปลอดภัย และ/หรือ คำสั่งอันชอบด้วยกฎหมายของบริษัทฯ ในฐานความผิดดังรายละเอียดต่อไปนี้ :
+                        </p>
+
+                        <!-- Offense Table Grid -->
+                        <div class="offense-table">
+                            <div class="offense-row">
+                                <div class="offense-col" id="pv_col_driving">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_driving">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับการขับขี่และความปลอดภัย</strong>
+                                    </div>
+                                    <div class="offense-desc">ขับรถเร็วเกินกำหนด / ขับขี่น่าหวาดเสียว / ฝ่าฝืนกฎจราจร</div>
+                                </div>
+                                <div class="offense-col" id="pv_col_maintenance">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_maintenance">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับการดูแลรักษารถ</strong>
+                                    </div>
+                                    <div class="offense-desc">ละเลยการตรวจเช็คสภาพรถตามระยะ / ปล่อยให้รถเสียหาย</div>
+                                </div>
+                            </div>
+
+                            <div class="offense-row">
+                                <div class="offense-col" id="pv_col_route">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_route">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับเส้นทางและเวลาปฏิบัติงาน</strong>
+                                    </div>
+                                    <div class="offense-desc">ใช้รถนอกเส้นทาง / นำรถไปใช้ส่วนตัวโดยไม่ได้รับอนุญาต</div>
+                                </div>
+                                <div class="offense-col" id="pv_col_intoxication">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_intoxication">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับของมึนเมา</strong>
+                                    </div>
+                                    <div class="offense-desc">ดื่มสุรา ของมึนเมา ระหว่างปฏิบัติหน้าที่</div>
+                                </div>
+                            </div>
+
+                            <div class="offense-row">
+                                <div class="offense-col" id="pv_col_discipline">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_discipline">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับเวลาลางานและวินัยทั่วไป</strong>
+                                    </div>
+                                    <div class="offense-desc">ละทิ้งหน้าที่ / ขาดงานโดยไม่แจ้งล่วงหน้า / มาสายเป็นประจำ</div>
+                                </div>
+                                <div class="offense-col" id="pv_col_behavior">
+                                    <div class="offense-header">
+                                        <span class="checkbox-mark" id="mark_behavior">[  ]</span>
+                                        <strong>ความผิดเกี่ยวกับพฤติกรรม</strong>
+                                    </div>
+                                    <div class="offense-desc">แสดงกิริยาหรือวาจาไม่สุภาพต่อลูกค้า/เพื่อนร่วมงาน</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-paragraph-row mt-2">
+                            <div><strong>ความผิดฐานอื่น ๆ :</strong> <span class="pv-text dotted-inline" id="pv_otherOffense">...................................................................................</span></div>
+                            <div><strong>มูลค่าความเสียหาย/เลขที่อ้างอิง :</strong> <span class="pv-text dotted-inline" id="pv_damageValue">...................................................</span></div>
+                        </div>
+
+                        <div class="doc-paragraph field-block">
+                            <div class="label-block">รายละเอียดพฤติการณ์เพิ่มเติม / หลักฐานแนบ (ถ้ามี) :</div>
+                            <div class="details-box" id="pv_offenseDetails">....................................................................................................................................................................................</div>
+                        </div>
+
+                        <div class="doc-paragraph field-block">
+                            <div class="label-block">คำชี้แจงหรือข้อแก้ตัวของพนักงาน (ถ้ามี) :</div>
+                            <div class="details-box statement-box" id="pv_employeeStatement">....................................................................................................................................................................................</div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 Document Preview -->
+                    <div class="doc-section">
+                        <h4 class="section-heading">2. ระดับการลงโทษวินัยในครั้งนี้ (Disciplinary Action)</h4>
+                        <p class="doc-paragraph">
+                            <strong>โดยบริษัทฯ พิจารณาลงโทษในระดับ :</strong>
+                        </p>
+
+                        <div class="penalty-preview-row">
+                            <span class="penalty-item" id="pv_level1">
+                                <span class="checkbox-mark" id="mark_level1">[  ]</span> ตักเตือนเป็นลายลักษณ์อักษร ครั้งที่ 1
+                            </span>
+                            <span class="penalty-item" id="pv_level2">
+                                <span class="checkbox-mark" id="mark_level2">[  ]</span> ตักเตือนเป็นลายลักษณ์อักษร ครั้งที่ 2
+                            </span>
+                            <span class="penalty-item" id="pv_level_final">
+                                <span class="checkbox-mark" id="mark_level_final">[  ]</span> ตักเตือนเป็นลายลักษณ์อักษร "ครั้งสุดท้าย"
+                            </span>
+                        </div>
+
+                        <div class="legal-clause-box">
+                            <strong class="clause-title">การคาดโทษตามกฎหมาย (Final Warning Clause):</strong>
+                            <p class="clause-body">
+                                บริษัทฯ ขอเตือนให้ท่านปรับปรุงตัวและละเว้นการกระทำความผิดดังกล่าว รวมถึงระเบียบข้อบังคับอื่น ๆ ของบริษัทฯ โดยเคร่งครัด หากท่านยังคงฝ่าฝืนหรือกระทำความผิดซ้ำคำเตือนในเรื่องเดียวกันนี้อีก ภายในระยะเวลา 1 ปี นับ ตั้งแต่วันที่ท่านได้รับทราบหนังสือเตือนฉบับนี้ บริษัทฯ มีความจำเป็นต้องดำเนินการลงโทษทางวินัยขั้นสูงสุด หรือ เลิกจ้างท่านโดยไม่จ่ายค่าชดเชยและคำบอกกล่าวล่วงหน้าใดๆ ทั้งสิ้น ตามกฎหมายคุ้มครองแรงงาน มาตรา 119 และประมวลกฎหมายแพ่งและพาณิชย์ มาตรา 583
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 Signatures Preview -->
+                    <div class="signatures-grid">
+                        <div class="sig-card">
+                            <div class="sig-header-tag">ผู้ออกหนังสือเตือน</div>
+                            <div class="sig-space"></div>
+                            <div class="sig-line-text">( <span id="pv_issuerName">คุณวิภา จันทร์แดง</span> )</div>
+                            <div class="sig-info-line">ตำแหน่ง: <span id="pv_issuerPosition">หัวหน้าแผนกขนส่ง</span></div>
+                            <div class="sig-info-line">วันที่: ....../......./.......</div>
+                        </div>
+
+                        <div class="sig-card">
+                            <div class="sig-header-tag">ผู้บังคับบัญชา / ผู้อนุมัติ</div>
+                            <div class="sig-space"></div>
+                            <div class="sig-line-text">( <span id="pv_approverName">คุณณัฏฐ์ สาระสังข์</span> )</div>
+                            <div class="sig-info-line">ตำแหน่ง: <span id="pv_approverPosition">ผู้จัดการฝ่ายขนส่ง</span></div>
+                            <div class="sig-info-line">วันที่: ....../......./.......</div>
+                        </div>
+
+                        <div class="sig-card">
+                            <div class="sig-header-tag">พนักงานผู้รับทราบคำเตือน</div>
+                            <div class="sig-space"></div>
+                            <div class="sig-line-text">( <span id="pv_employeeSignName">..................................................</span> )</div>
+                            <div class="sig-info-line">ตำแหน่ง: <span id="pv_employeeSignPosition">...................................</span></div>
+                            <div class="sig-info-line">วันที่: ....../......./.......</div>
+                        </div>
+                    </div>
+
+                    <!-- Clean Compact Witness Footer Box (Zero Bottom Overflow) -->
+                    <div class="witness-footer-box" id="pv_witnessBlock">
+                        <span class="witness-title-tag">พยาน :</span>
+                        <div class="witness-fields-flex">
+                            <span class="witness-sig-line">ลงชื่อ ....................................</span>
+                            <span class="witness-name-item">( <span id="pv_witnessName">....................................</span> )</span>
+                            <span class="witness-pos-item">ตำแหน่ง: <span id="pv_witnessPosition">............................</span></span>
+                            <span class="witness-date-item">วันที่: ....../......./.......</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
